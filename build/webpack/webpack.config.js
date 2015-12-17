@@ -15,7 +15,8 @@ webpackConfig.entry = (function() {
     var _entry = {};
 
     components.forEach(function(name) {
-        var pack = require(name + '/package.json');
+        var pack = require('../../package.json');
+        // var pack = require(name + '/package.json');
         _entry[name] = path.resolve(nodeRoot, name, pack.main);
     });
 

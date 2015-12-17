@@ -36,47 +36,10 @@
 ------
 
 #### 快速开始
-
-    // 安装fis及相关插件
-    npm i -g fis3 (需要3.0.7以上)
-    npm i -g fis3-hook-module
-    npm i -g fis-parser-sass3
-    npm i -g fis-parser-babel2
-    npm i -g fis-optimizer-uglify-js
-    npm i -g fis-optimizer-html-minifier
-    npm i -g fis-optimizer-clean-css
-
-    // 其他编译工具
-    npm i -g cwebp-bin
-    npm i -g eslint
-    npm i -g babel-eslint
-
-    // 其他构建工具
-    npm i -g gulp
-    npm i -g webpack
-
-    // node调试工具
-    npm i -g node-dev
-    npm i -g node-inspector (如果在iojs环境安装失败，可以安装版本@0.9.2)
-
-    // 性能调优工具, 下载安装。
-    Mac: http://profiler.oss-cn-hangzhou.aliyuncs.com/node-profiler-v0.12.6.pkg
-    Win: http://profiler.oss-cn-hangzhou.aliyuncs.com/node-profiler-v0.12.6-x64.msi
-    npm run profiler
-
-    // 类似livereload的工具
-    npm i -g browser-sync
-    npm i -g browser-sync-vue
-
-    // 发布工具
-    npm i -g pm2
-
-    // 下载项目
-    git clone https://github.com/okoala/fis3-vue.git
-
     // 运行项目
     cd fis3-vue
-    npm install
+    cnpm install
+    bower install
     npm run dev
 
     // 需要预先配置好发布信息

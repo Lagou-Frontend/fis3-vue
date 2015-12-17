@@ -16,17 +16,20 @@
         <!-- No Baidu Siteapp-->
         <meta http-equiv="Cache-Control" content="no-siteapp"/>
 
-        <title>Hello World!</title>
+        <title>__FRAMEWORK_NAME__</title>
 
-        <link rel="stylesheet" type="text/css" href="css/global.scss">
+        <link rel="stylesheet" type="text/css" href="main.scss">
         <meta name="description" content="集成解决方案" />
         <meta name="keywords" content="集成解决方案, 模块化开发,fis3,spa,vue" />
     </head>
     <body>
-        <div>
-            Hello world!
-        </div>
-        <script src="libs/webp.js"></script>
-        <script src="libs/esl.js"></script>
+        <h1>
+            Message Main
+        </h1>
+        <script src="../../libs/webp.js"></script>
+        <script src="../../libs/esl.js"></script>
+        <script type="text/javascript">
+            require(['./main']);
+        </script>
     </body>
 </html>

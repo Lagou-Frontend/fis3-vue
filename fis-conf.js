@@ -26,7 +26,7 @@ var plugin = function(name, options) {
 /****************环境变量*****************/
 fis
     // 排除指定目录
-    .set('project.files', ['**', '.**', '.**/**'])
+    .set('project.files', ['!client/libs/**'])
     .set('project.ignore', ['node_modules/**', '.gitignore', '**/_*.scss', '.docs/**', '.dist/**', '.git/**', '.svn/**', 'fis-conf.js'])
     // 把scss映射为css
     .set('project.ext', {
@@ -90,14 +90,14 @@ fis
             layout: 'matrix',
             margin: '15',
             styleReg: /(<style(?:(?=\s)[\s\S]*?["'\s\w\/\-]>|>))([\s\S]*?)(<\/style\s*>|$)/ig
-        }),
+        })
 
         // prepackager: plugin('webp', {
         //     quality: 50
         // }),
 
         // 主要框架的逻辑
-        postpackager: plugin('frameworkConf')
+        // postpackager: plugin('frameworkConf')
     });
 
 
@@ -115,8 +115,8 @@ fis
     })
 
     .match(/^\/components\/(.*)$/i, {
-        url : '${urlPrefix}/c/${version}/$1',
-        release : '/public/c/${version}/$1'
+        url : '${urlPrefix}/c/$1',
+        release : '/public/c/$1'
     })
     // components相关
     .match(/^\/components\/(.*\.tpl)$/i, {
@@ -124,43 +124,43 @@ fis
         isViews: true,
     })
     .match(/^\/components\/(.*\.js)$/i, {
-        moduleId: '${version}/$1',
-        id : '${version}/$1',
+        moduleId: '$1',
+        id : '$1',
         isMod : true,
         isES6 : true,
         isComponent : true,
         useHash : false,
-        url : '${urlPrefix}/c/${version}/$1',
-        release : '/public/c/${version}/$1'
+        url : '${urlPrefix}/c/$1',
+        release : '/public/c/$1'
     })
     .match(/^\/components\/(.*)\.(scss|css)$/i, {
-        moduleId: '${version}/$1.css',
-        id : '${version}/$1.css',
+        moduleId: '$1.css',
+        id : '$1.css',
         isMod : true,
         useSprite : true,
         useHash : false,
-        url : '${urlPrefix}/c/${version}/$1.$2',
-        release : '/public/c/${version}/$1.$2'
+        url : '${urlPrefix}/c/$1.$2',
+        release : '/public/c/$1.$2'
     })
     .match(/^\/components\/(.*)(\.webp)\.(png|jpg)$/i, {
         useWebP: true,
-        url: '${urlPrefix}/c/${version}/$1.$3',
-        release: '/public/c/${version}/$1.$3'
+        url: '${urlPrefix}/c/$1.$3',
+        release: '/public/c/$1.$3'
     })
 
     // client文件夹相关
     .match(/^\/client\/(.*)$/i, {
         useSprite : true,
         isViews : true,
-        url : '${urlPrefix}/${version}/$1',
-        release : '/public/${version}/$1'
+        url : '${urlPrefix}/$1',
+        release : '/public/$1'
     })
     .match(/^\/client\/(.*\.(?:html?|js))$/i, {
         useCache: false,
         isViews: true,
         isES6: false,
-        url : '${urlPrefix}/${version}/$1',
-        release : '/public/${version}/$1'
+        url : '${urlPrefix}/$1',
+        release : '/public/$1'
     })
     .match(/^\/client\/static\/(.*)$/i, {
         url : '/static/$1',
