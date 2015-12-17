@@ -8,18 +8,17 @@ var meta = require('../package.json'),
     lusca = require('lusca'),
     path = require('path'),
     app = module.exports = express(),
-    middleware = ['csrf', 'combo', 'router', 'proxy', 'static', 'error'];
-
-var config = require('../config');
+    middleware = ['csrf', 'combo', 'router', 'proxy', 'static', 'error'],
+    config = require('../config');
 
 // lazy load middlewares
-middleware.forEach(function (m) {
-    middleware.__defineGetter__(m, function () {
+middleware.forEach(function(m) {
+    middleware.__defineGetter__(m, function() {
         return require('./middleware/' + m);
     });
 });
 
-process.on('uncaughtException', function (err) {
+process.on('uncaughtException', function(err) {
     (app.get('logger') || console).error('Uncaught exception:\n', err.stack);
 });
 
