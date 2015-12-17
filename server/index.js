@@ -7,9 +7,13 @@ var meta = require('../package.json'),
     session = require('express-session'),
     lusca = require('lusca'),
     path = require('path'),
+    redis = require('redis'),
+    RedisStore = require('connect-redis')(session),
     app = module.exports = express(),
     middleware = ['csrf', 'combo', 'router', 'proxy', 'static', 'error'],
     config = require('../config');
+
+var client = redis.createClient(); // CREATE REDIS CLIENT
 
 // lazy load middlewares
 middleware.forEach(function(m) {
@@ -39,7 +43,8 @@ swig.setDefaults({ cache: config.viewCache });
 app.use(session({
     secret: 'fis3-vue',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store: new RedisStore({ host: '10.1.196.134', port: 6379, client: client })
 }));
 
 // 关闭lusca的csrf，使用自定义的
@@ -50,13 +55,10 @@ app.use(lusca({
     xssProtection: true
 }));
 app.use(middleware.csrf());
-
 app.use(compress());
 app.use('/co', middleware.combo());
 app.use(middleware.router({index: path.resolve(config.dest, 'public/index.html')}));
-
 app.use('/api', middleware.proxy({target: config.api_target}));
-
 app.use('/public', middleware.static(path.join(config.dest, '/public')));
 app.use('/static', middleware.static(path.join(config.dest, '/static')));
 app.use(middleware.error());

@@ -179,11 +179,11 @@ rules:
   no-with: 2
   object-curly-spacing: 0
   object-shorthand: 0
-  one-var: [2, {
-    "var": "always",
-    "let": "always",
-    "const": "never"
-  }]
+  #one-var: [2, {
+#    "var": "always",
+#    "let": "always",
+#    "const": "never"
+#  }]
   operator-assignment: 0
   operator-linebreak: [2, after]
   padded-blocks: 0
