@@ -5,3 +5,4 @@ clint/*
 docs/*
 node_modules/*
 test/*
+client/libs/*
