@@ -1,7 +1,10 @@
 'use strict';
-// import controller
-const users = require('../controllers/users');
+
+const fs = require('fs');
 
 module.exports = function(app) {
-	app.get('/user/:id', users.show);
+	var files = fs.readdirSync(__dirname + '/../routes/');
+	files.forEach(function(file) {
+		require('../routes/' + file)(app);
+	});
 };
