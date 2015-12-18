@@ -1,71 +1,20 @@
 'use strict';
 
-var meta = require('../package.json'),
-    express = require('express'),
-    swig = require('swig'),
-    compress = require('compression'),
-    session = require('express-session'),
-    lusca = require('lusca'),
-    path = require('path'),
-    redis = require('redis'),
-    RedisStore = require('connect-redis')(session),
-    app = module.exports = express(),
-    middleware = ['csrf', 'combo', 'router', 'proxy', 'static', 'error'],
-    config = require('../config');
+var express = require('express'),
+	app = express();
 
-var client = redis.createClient(); // CREATE REDIS CLIENT
-
-// lazy load middlewares
-middleware.forEach(function(m) {
-    middleware.__defineGetter__(m, function() {
-        return require('./middleware/' + m);
-    });
-});
+module.exports = app;
 
 process.on('uncaughtException', function(err) {
-    (app.get('logger') || console).error('Uncaught exception:\n', err.stack);
+	(app.get('logger') || console).error('Uncaught exception:\n', err.stack);
 });
 
-// 使用swig作为模板引擎
-app.engine('html', swig.renderFile);
-app.set('name', meta.name);
-app.set('version', meta.version);
-app.set('port', process.env.PORT || 4000);
-app.set('root', path.resolve(__dirname, '../').replace(/\/+$/, ''));
-app.set('views', path.resolve(__dirname, '../').replace(/\/+$/, ''));
-app.set('view engine', 'html');
-app.set('view cache', config.view_cache);
-app.set('logger', console);
-app.enable('trust proxy');
-
-swig.setDefaults({ cache: config.viewCache });
-
-app.use(session({
-    secret: 'fis3-vue',
-    resave: true,
-    saveUninitialized: true,
-    store: new RedisStore({ host: '10.1.196.134', port: 6379, client: client })
-}));
-
-// 关闭lusca的csrf，使用自定义的
-app.use(lusca({
-    csrf: false,
-    xframe: 'SAMEORIGIN',
-    p3p: false,
-    xssProtection: true
-}));
-app.use(middleware.csrf());
-app.use(compress());
-app.use('/co', middleware.combo());
-app.use(middleware.router({index: path.resolve(config.dest, 'public/index.html')}));
-app.use('/api', middleware.proxy({target: config.api_target}));
-app.use('/public', middleware.static(path.join(config.dest, '/public')));
-app.use('/static', middleware.static(path.join(config.dest, '/static')));
-app.use(middleware.error());
+require('./env/express')(app);
+require('./env/routes')(app);
 
 if (require.main === module) {
-    app.listen(app.get('port'), function() {
-        console.log('[%s] Express server listening on port %d',
-            app.get('env').toUpperCase(), app.get('port'));
-    });
+	app.listen(app.get('port'), function() {
+		console.log('[%s] Express server listening on port %d',
+			app.get('env').toUpperCase(), app.get('port'));
+	});
 }
