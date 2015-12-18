@@ -1,15 +1,17 @@
 'use strict';
 
+const logger = require('tracer').colorConsole();
+
 /**
  *  Show profile
  */
 
 exports.show = function(req, res) {
-	console.log('in user show');
+	logger.info('hahaha in user show');
 	res.send('show user, id = ' + req.params.id);
 };
 
 exports.delete = function(req, res) {
-	console.log('delete');
+	logger.info('delete');
 	res.send('delete user');
 };
