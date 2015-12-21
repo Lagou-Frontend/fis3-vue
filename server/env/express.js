@@ -1,7 +1,7 @@
 'use strict';
 
 const meta = require('../../package.json');
-// const express = require('express');
+const express = require('express');
 const session = require('express-session');
 const compress = require('compression');
 const path = require('path');
@@ -18,7 +18,7 @@ module.exports = function(app) {
 	app.set('name', meta.name);
 	app.set('version', meta.version);
 	app.set('port', process.env.PORT || 4000);
-	app.set('root', path.resolve(__dirname, '../').replace(/\/+$/, ''));
+	app.set('root', path.resolve(__dirname, '../../').replace(/\/+$/, ''));
 	app.set('views', path.resolve(__dirname, '../').replace(/\/+$/, ''));
 	app.set('view engine', 'html');
 	app.set('view cache', config.view_cache);
@@ -66,5 +66,6 @@ module.exports = function(app) {
 	// }));
 	app.use('/public', middleware.static(path.join(config.dest, '/public')));
 	app.use('/static', middleware.static(path.join(config.dest, '/static')));
+	app.use('/libs', express.static(path.join(app.get('root'), '/libs')));
 	app.use(middleware.error());
 };
