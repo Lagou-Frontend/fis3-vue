@@ -37,7 +37,7 @@ gulp.task('fis3-debug', function() {
         cwd: config.root
     })();
 
-    shell.task(path.join('node --debug ' + process.env['APPDATA'], 'npm/node_modules/fis3/bin/fis.js') + ' release -w -d ' + path.resolve(config.root, config.dest))();
+    shell.task(path.join('node --debug ' + config.root, 'node_modules/fis3/bin/fis.js') + ' release -w -d ' + path.resolve(config.root, config.dest))();
 });
 gulp.task('fis3-server', function() {
     shell.task('node-inspector --web-port=8081', {

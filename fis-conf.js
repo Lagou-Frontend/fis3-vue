@@ -27,7 +27,7 @@ var plugin = function(name, options) {
 /** **************环境变量*****************/
 fis
 // 排除指定目录
-	.set('project.files', ['!client/libs/**'])
+	.set('project.files', ['!client/libs/**', '!dep/**'])
 	.set('project.ignore', ['node_modules/**', '.gitignore', '**/_*.scss', '.docs/**', '.dist/**', '.git/**', '.svn/**', 'fis-conf.js'])
 	// 把scss映射为css
 	.set('project.ext', {
@@ -52,16 +52,28 @@ if (config.env === 'development') {
 	fis.set('framework.useHash', true);
 }
 
-// 开启模块化包装amd，cmd
-fis.hook('module', {
-	mode: 'auto'
+fis.hook('commonjs', {
+	// 参考 http://imweb.io/topic/565c548a3ad940357eb99874
+	paths: {
+		'react': '../dep/react.js',
+		'react-dom': '../dep/react-dom.js'
+	}
 });
 
 /** **************语言编译*****************/
 fis
+.match('../dep/react', {
+	isMod: true,
+	moduleId: 'react'  // 为utils设置一个moduleId，希望以后能直接require('utils')
+})
+.match('../dep/react-dom', {
+	isMod: true,
+	moduleId: 'react-dom'  // 为utils设置一个moduleId，希望以后能直接require('utils')
+})
 .match(/\.js$/i, {
+	isMod: true,
 	// 设置js文件为babel解析，支持es6的写法。
-	parser: plugin('babel2', {
+	parser: plugin('babel', {
 		// babel options
 	}),
 
@@ -87,14 +99,6 @@ fis
 	})
 })
 
-.match('**.jsx', {
-	parser: plugin('reactjs'),
-	rExt: 'js'
-})
-.match('*:jsx', {
-	parser: plugin('reactjs')
-})
-
 .match('::package', {
 	// npm install [-g] fis3-postpackager-loader
 	// 分析 __RESOURCE_MAP__ 结构，来解决资源加载问题
@@ -103,14 +107,15 @@ fis
 		layout: 'matrix',
 		margin: '15',
 		styleReg: /(<style(?:(?=\s)[\s\S]*?["'\s\w\/\-]>|>))([\s\S]*?)(<\/style\s*>|$)/ig
+	}),
+
+	// npm install [-g] fis3-postpackager-loader
+	// 分析 __RESOURCE_MAP__ 结构，来解决资源加载问题
+	postpackager: plugin('loader', {
+		resourceType: 'mod',
+		// allInOne: true,
+		useInlineMap: true // 资源映射表内嵌
 	})
-
-	// prepackager: plugin('webp', {
-	//     quality: 50
-	// }),
-
-	// 主要框架的逻辑
-	// postpackager: plugin('frameworkConf')
 });
 
 /** ***********************目录规范*****************************/
@@ -121,59 +126,73 @@ fis
 	release: false
 })
 
-// libs下是bower下载的资源，不需要编译
-.match(/^\/libs\/(.*)$/i, {
-	useCompile: false,
-	release: 'public/libs/$1'
-})
-
-.match(/^\/components\/(.*)$/i, {
-	// components下开启同名依赖，通常是为了自动加载样式文件。
-	useSameNameRequire: true
-})
-
-.match(/^\/components\/(.*)$/i, {
-	url: '${urlPrefix}/c/$1',
-	release: '/public/c/$1'
-})
-// components相关
-.match(/^\/components\/(.*\.tpl)$/i, {
-	useCache: false,
-	isViews: true
-})
-.match(/^\/components\/(.*\.js)$/i, {
-	moduleId: '$1',
-	id: '$1',
-	isMod: true,
-	isES6: true,
-	isComponent: true,
-	useHash: false,
-	url: '${urlPrefix}/c/$1',
-	release: '/public/c/$1'
-})
-.match(/^\/components\/(.*)\.(scss|css)$/i, {
-	moduleId: '$1.css',
-	id: '$1.css',
-	isMod: true,
-	useSprite: true,
-	useHash: false,
-	url: '${urlPrefix}/c/$1.$2',
-	release: '/public/c/$1.$2'
-})
-.match(/^\/components\/(.*)(\.webp)\.(png|jpg)$/i, {
-	useWebP: true,
-	url: '${urlPrefix}/c/$1.$3',
-	release: '/public/c/$1.$3'
-})
+// .match(/^\/components\/(.*)$/i, {
+// 	// components下开启同名依赖，通常是为了自动加载样式文件。
+// 	useSameNameRequire: true
+// })
+//
+// .match(/^\/components\/(.*)$/i, {
+// 	url: '${urlPrefix}/c/$1',
+// 	release: '/public/c/$1'
+// })
+// // components相关
+// .match(/^\/components\/(.*\.tpl)$/i, {
+// 	useCache: false,
+// 	isViews: true
+// })
+// .match(/^\/components\/(.*\.js)$/i, {
+// 	moduleId: '$1',
+// 	id: '$1',
+// 	isMod: true,
+// 	isES6: true,
+// 	isComponent: true,
+// 	useHash: false,
+// 	url: '${urlPrefix}/c/$1',
+// 	release: '/public/c/$1'
+// })
+// .match(/^\/components\/(.*)\.(scss|css)$/i, {
+// 	moduleId: '$1.css',
+// 	id: '$1.css',
+// 	isMod: true,
+// 	useSprite: true,
+// 	useHash: false,
+// 	url: '${urlPrefix}/c/$1.$2',
+// 	release: '/public/c/$1.$2'
+// })
+// .match(/^\/components\/(.*)(\.webp)\.(png|jpg)$/i, {
+// 	useWebP: true,
+// 	url: '${urlPrefix}/c/$1.$3',
+// 	release: '/public/c/$1.$3'
+// })
 
 // client文件夹相关
+// libs下是bower下载的资源，不需要编译
+// .match(/^\/client\/libs\/(.*)$/i, {
+// 	useCompile: false,
+// 	release: 'public/libs/$1'
+// })
+
+// dep 目录下是bower按照的，只制定需要编译的js
+.match(/^\/dep\/(react.*\.js)$/i, {
+	isMod: true,
+	useCache: false,
+	release: '/public/dep/$1'
+})
+.match(/(mod\.js)$/i, {
+	isMod: false,
+	useCache: true,
+	release: '/public/dep/$1'
+})
+
 .match(/^\/client\/(.*)$/i, {
+	isMod: true,
 	useSprite: true,
 	isViews: true,
 	url: '${urlPrefix}/$1',
 	release: '/public/$1'
 })
 .match(/^\/client\/(.*\.(?:html?|js))$/i, {
+	isMod: true,
 	useCache: false,
 	isViews: true,
 	isES6: false,
