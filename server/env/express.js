@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 const meta = require('../../package.json');
 const express = require('express');
@@ -19,7 +19,7 @@ module.exports = function(app) {
 	app.set('version', meta.version);
 	app.set('port', process.env.PORT || 4000);
 	app.set('root', path.resolve(__dirname, '../../').replace(/\/+$/, ''));
-	app.set('views', path.resolve(__dirname, '../').replace(/\/+$/, ''));
+	app.set('views', path.resolve(__dirname, '../../.dist/').replace(/\/+$/, ''));
 	app.set('view engine', 'html');
 	app.set('view cache', config.view_cache);
 	app.set('logger', console);
@@ -32,9 +32,14 @@ module.exports = function(app) {
 	// set middleware
 	// lazy load middlewares
 	middleware.forEach(function(m) {
-		middleware.__defineGetter__(m, function() {
-			return require('../middleware/' + m);
+		Object.defineProperty(middleware, m, {
+			get: function() {
+				return require('../middleware/' + m);
+			}
 		});
+		// middleware.__defineGetter__(m, function() {
+		// 	return require('../middleware/' + m);
+		// });
 	});
 
 	app.use(session({
@@ -58,12 +63,16 @@ module.exports = function(app) {
 	app.use(middleware.csrf());
 	app.use(compress());
 	app.use('/co', middleware.combo());
+
+	// router
 	app.use(middleware.router({
 		index: path.resolve(config.dest, 'public/index.html')
 	}));
 	// app.use('/api', middleware.proxy({
 	// 	target: config.api_target
 	// }));
+
+	// static resources
 	app.use('/public', middleware.static(path.join(config.dest, '/public')));
 	app.use('/static', middleware.static(path.join(config.dest, '/static')));
 	app.use('/libs', express.static(path.join(app.get('root'), '/libs')));
