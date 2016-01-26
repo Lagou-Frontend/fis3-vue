@@ -65,6 +65,10 @@ module.exports = function(app) {
 	app.use('/co', middleware.combo());
 
 	// router
+	// app.use('/api', middleware.router.apiRouter());
+	// app.use(middleware.router.viewRouter({
+	// 	index: path.resolve(config.dest, 'public/index.html')
+	// }));
 	app.use(middleware.router({
 		index: path.resolve(config.dest, 'public/index.html')
 	}));

@@ -1,5 +1,7 @@
 const users = require('../../controllers/users');
+// const apiRouter = require('../../middleware/router').apiRouter;
 
 module.exports = function(app) {
-	app.get('/api/users/:id', users.show);
+	app.post('/api/users', users.show);
+	app.get('/api/users', users.list);
 };

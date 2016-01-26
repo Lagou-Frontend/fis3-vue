@@ -3,7 +3,8 @@
 var cluster = require('cluster');
 var express = require('express');
 
-if (cluster.isMaster) {
+// if (cluster.isMaster) {
+if (false) {
 	var numWorkers = require('os').cpus().length;
 
 	console.log('Master cluster setting up ' + numWorkers + ' workers...');

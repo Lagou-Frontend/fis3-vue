@@ -70,6 +70,7 @@ fis
 	isMod: true,
 	moduleId: 'react-dom'  // 为utils设置一个moduleId，希望以后能直接require('utils')
 })
+/** 开发阶段不编译，太慢了。*/
 .match(/\.js$/i, {
 	isMod: true,
 	// 设置js文件为babel解析，支持es6的写法。
@@ -80,6 +81,7 @@ fis
 	// 自己的define包装
 	postprocessor: plugin('define')
 })
+
 
 .match(/\.scss$/i, {
 	rExt: '.css', // from .scss to .css
@@ -172,10 +174,15 @@ fis
 // 	release: 'public/libs/$1'
 // })
 
-// dep 目录下是bower按照的，只制定需要编译的js
+// dep 目录下是bower安装的，只制定需要编译的js
+.match(/^\/dep\/jquery\/.*(jquery.*\.js)$/i, {
+	isMod: false,
+	useCache: true,
+	release: '/public/dep/$1'
+})
 .match(/^\/dep\/(react.*\.js)$/i, {
 	isMod: true,
-	useCache: false,
+	useCache: true,
 	release: '/public/dep/$1'
 })
 .match(/(mod\.js)$/i, {
@@ -183,6 +190,7 @@ fis
 	useCache: true,
 	release: '/public/dep/$1'
 })
+
 
 .match(/^\/client\/(.*)$/i, {
 	isMod: true,
