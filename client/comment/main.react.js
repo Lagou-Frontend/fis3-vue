@@ -78,7 +78,7 @@ var CommentBox = React.createClass({
 		setInterval(this.loadCommentsFromServer, this.props.pollInterval);
 	},
 	render: function() {
-		return ( < div className = "commentBox" >
+		return (<div className = "commentBox">
 			< h1 > Comments < /h1> < CommentList data = {
 				this.state.data
 			}
@@ -93,7 +93,7 @@ var CommentBox = React.createClass({
 var CommentList = React.createClass({
 	render: function() {
 		var commentNodes = this.props.data.map(function(comment) {
-			return ( <Comment author = {
+			return (<Comment author = {
 					comment.author
 				}
 				key = {

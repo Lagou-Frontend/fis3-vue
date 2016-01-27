@@ -1,14 +1,13 @@
 var React = require('../../dep/react/react');
 var ReactDOM = require('../../dep/react/react-dom');
 
-var MessageNav = require('./modules/MessageNav.react');
-var MessageList = require('./modules/MessageList.react');
+var MessagePanel = require('./modules/MessagePanel.react');
+// var MessageList = require('./modules/MessageList.react');
 
 var MessageBox = React.createClass({
 	render: function() {
 		return (<div className = "message-box">
-				<MessageNav url="/api/users" />
-				<MessageList />
+				<MessagePanel url="/api/users" />
 			</div>
 		);
 	}
