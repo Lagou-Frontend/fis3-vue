@@ -15,6 +15,9 @@ globals:
   __DEV__: true
   __SERVER__: true
 
+  # 设置$为全局变量
+  $: true
+
 plugins: [react]
 
 ecmaFeatures:
