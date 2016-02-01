@@ -2,6 +2,7 @@
 
 const meta = require('../../package.json');
 const express = require('express');
+const cookieParser = require('cookie-parser')
 const session = require('express-session');
 const compress = require('compression');
 const path = require('path');
@@ -42,13 +43,14 @@ module.exports = function(app) {
 		// });
 	});
 
+	app.use(cookieParser());
 	app.use(session({
 		secret: 'fis3-vue',
 		resave: true,
 		saveUninitialized: true,
 		store: new RedisStore({
 			host: config.redisHost,
-			port: 6379,
+			port: config.redisPort,
 			client: redis.createClient()
 		})
 	}));

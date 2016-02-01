@@ -44,7 +44,7 @@ var TabContents = React.createClass({
 			<div className="twrap">
 				<div className="tab-content" id="msgContent">
 					<AllMessage data={this.props.data} isActive={(this.props.currentTab === '#all')} />
-					<DeliverMessage isActive={(this.props.currentTab === '#deliver')}/>
+					<DeliverMessage data={this.props.deliverData} isActive={(this.props.currentTab === '#deliver')}/>
 				</div>
 			</div>
 		);
@@ -55,15 +55,30 @@ module.exports = React.createClass({
 	loadDataFromServer: function(queryType) {
 		$.ajax({
 			url: this.props.url,
+			// type: 'post',
 			dataType: 'json',
 			cache: false,
 			data: {
 				queryType: queryType || ''
 			},
 			success: function(data) {
-				this.setState({
-					allMsg: data
-				});
+				switch (queryType) {
+				case 'DELIVER':
+					this.setState({
+						deliver: {
+							msg: data,
+							loaded: true
+						}
+					});
+					break;
+				default:
+					this.setState({
+						all: {
+							msg: data,
+							loaded: true
+						}
+					});
+				}
 			}.bind(this),
 			error: function(xhr, status, err) {
 				console.error(this.props.url, status, err.toString());
@@ -73,8 +88,16 @@ module.exports = React.createClass({
 	getInitialState: function() {
 		return {
 			currentTab: '#all',
-			allMsg: null,
-			deliverMsg: null
+			all: {
+				msg: null,
+				loaded: false,
+				page: 1
+			},
+			deliver: {
+				msg: null,
+				loaded: false,
+				page: 1
+			}
 		};
 	},
 	changeTab: function(hash, queryType) {
@@ -93,11 +116,11 @@ module.exports = React.createClass({
                 <div className="setting-box">
                     <h2 className="main-title">我的消息</h2>
                     <div className="setting-btn">
-                        <a href="${FE_base}/message/settingsdetail.html">设置</a>
+                        <a href="message/settingsdetail.html">设置</a>
                     </div>
                 </div>
                 <Tabs changeTab={this.changeTab} currentTab={this.state.currentTab}/>
-				<TabContents data={this.state.allMsg} currentTab={this.state.currentTab}/>
+				<TabContents data={this.state.all.msg} deliverData={this.state.deliver.msg} currentTab={this.state.currentTab}/>
 			</div>
 		);
 	}

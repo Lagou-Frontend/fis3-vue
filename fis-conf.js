@@ -191,7 +191,6 @@ fis
 	release: '/public/dep/$1'
 })
 
-
 .match(/^\/client\/(.*)$/i, {
 	isMod: true,
 	useSprite: true,

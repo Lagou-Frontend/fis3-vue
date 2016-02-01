@@ -7,7 +7,7 @@ var MessagePanel = require('./modules/MessagePanel.react');
 var MessageBox = React.createClass({
 	render: function() {
 		return (<div className = "message-box">
-				<MessagePanel url="/api/users" />
+				<MessagePanel url="/api/messages" />
 			</div>
 		);
 	}

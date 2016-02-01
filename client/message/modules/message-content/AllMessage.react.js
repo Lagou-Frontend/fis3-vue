@@ -1,12 +1,19 @@
 var React = require('../../../../dep/react/react');
 var DeliverMsgItem = require('../message-info/DeliverMsgItem.react');
+var utils = require('../../common/parse-message.js');
 
 module.exports = React.createClass({
 	render: function() {
 		var msgNodes;
+		var feBase = 'http://www.lagou.com';
 		if (this.props.data !== null) {
 			msgNodes = this.props.data.content.data.postMessageInfo.result.map(function(msg) {
-				return (<DeliverMsgItem data={msg} />);
+				utils.parseContentFilter(msg);
+				if (msg !== undefined && msg.messageType === 'DELIVER') {
+					return (<DeliverMsgItem key={msg.id} data={msg} FE_base={feBase} />);
+				} else {
+					return null;
+				}
 			});
 		}
 		return (

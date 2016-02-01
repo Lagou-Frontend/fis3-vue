@@ -1,21 +1,21 @@
 var React = require('../../../../dep/react/react');
-
 var DeliverMsgItem = require('../message-info/DeliverMsgItem.react');
+var utils = require('../../common/parse-message.js');
 
 module.exports = React.createClass({
 	render: function() {
-		// var deliverMsgs = this.props.data.map(function(msg) {
-		// 	return (<DeliverMsgItem data = {
-		// 			{msg}
-		// 		}> </DeliverMsgItem>
-		// 	);
-		// });
+		var msgNodes;
+		var feBase = 'http://www.lagou.com';
+		if (this.props.data !== null) {
+			msgNodes = this.props.data.content.data.postMessageInfo.result.map(function(msg) {
+				utils.parseContentFilter(msg);
+				return (<DeliverMsgItem key={msg.id} data={msg} FE_base={feBase} />);
+			});
+		}
 		return (
 			<div className={this.props.isActive ? 't-content-item active' : 't-content-item'} data-id="#deliver" data-tag="DELIVER">
 				<ul className="msg-list" id="applyListContainer">
-					<li>deliverMsgs1</li>
-					<li>deliverMsgs2</li>
-					<li>deliverMsgs3</li>
+					{msgNodes}
 				</ul>
 				<div className="item_con_pager" data-container-id="applyListContainer" data-template-id="msgListTpl" data-keyword=""></div>
 			</div>

@@ -13,21 +13,26 @@ module.exports = React.createClass({
 						</div>
 						<dl className="info">
 							<dt>
-								<a className="company-logo" target="_blank" href="{this.props.FE_base}/gongsi/{this.props.content.companyId}.html">
-								<img className="" src="{this.props.FE_base}/{this.props.content.companyLogo}" alt="{this.props.content.companyShowName}" />
+								<a className="company-logo" target="_blank"
+									href={this.props.FE_base + '/gongsi/' + this.props.data.content.companyId + '.html'}>
+								<img className=""
+									src={this.props.FE_base + '/' + this.props.data.content.companyLogo}
+									alt={this.props.data.content.companyShowName} />
 								</a>
 							</dt>
 							<dd className="msg-info">
 								<h4>
-									<a href="{this.props.FE_base}/jobs/{this.props.content.positionId}.html" target="_blank" className="job-title">{this.props.content.positionName}</a>
+									<a href={this.props.FE_base + '/jobs/' + this.props.data.content.positionId + '.html'} target="_blank"
+										className="job-title">{this.props.data.content.positionName}</a>
 									<em>·</em>
-									<a href="{this.props.FE_base}/gongsi/{this.props.content.companyId}.html" target="_blank">{this.props.content.companyShowName}</a>
+									<a href={this.props.FE_base + '/gongsi/' + this.props.data.content.companyId + '.html'} target="_blank">{this.props.data.content.companyShowName}</a>
 								</h4>
 								<div className="msg-status">
 									<span>最新状态：</span>
-									<a href="{this.props.FE_base}/message/businessDetail.html?type=DELIVER&businessId={this.props.businessId}" target="_blank">{this.props.businessStatus}</a>
+									<a href={this.props.FE_base + '/message/businessDetail.html?type=DELIVER&businessId=' + this.props.data.businessId} target="_blank">{this.props.businessStatus}</a>
 								</div>
-								<a className="to-detail" target="_blank" href="{this.props.FE_base}/message/businessDetail.html?type=DELIVER&businessId={this.props.businessId}">去看看</a>
+								<a className="to-detail" target="_blank"
+									href={this.props.FE_base + '/message/businessDetail.html?type=DELIVER&businessId=' + this.props.data.businessId}>去看看</a>
 							</dd>
 						</dl>
 					</div>

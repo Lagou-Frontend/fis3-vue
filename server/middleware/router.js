@@ -26,6 +26,7 @@ var express = require('express'),
 // };
 
 router.get(['/', '/*'], function(req, res, next) {
+	console.log('this is api authentication router...');
 	if (!(req.url.indexOf('/public') === 0) &&
 		!(req.url.indexOf('/api') === 0) &&
 		!(req.url.indexOf('/static') === 0)) {
