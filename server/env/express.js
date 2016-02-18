@@ -8,7 +8,7 @@ const compress = require('compression');
 const path = require('path');
 const swig = require('swig');
 const lusca = require('lusca');
-const middleware = ['csrf', 'combo', 'router', 'proxy', 'static', 'error'];
+const middleware = ['csrf', 'authentication', 'combo', 'router', 'proxy', 'static', 'error', 'ticketValidator'];
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 const config = require('../../config');
@@ -63,6 +63,8 @@ module.exports = function(app) {
 		xssProtection: true
 	}));
 	app.use(middleware.csrf());
+	app.use(middleware.authentication());
+	app.use(middleware.ticketValidator());
 	app.use(compress());
 	app.use('/co', middleware.combo());
 

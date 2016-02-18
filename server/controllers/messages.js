@@ -3,7 +3,7 @@
 const logger = require('tracer').colorConsole();
 
 exports.list = function(req, res) {
-	logger.info('list');
+	logger.info('session ====== ' + JSON.stringify(req.session));
 	res.json({
 		"content": {
 			"data": {

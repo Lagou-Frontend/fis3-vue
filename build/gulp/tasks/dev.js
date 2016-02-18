@@ -4,6 +4,7 @@ var path = require('path');
 var gulp = require('gulp');
 var shell = require('gulp-shell');
 var clean = require('gulp-clean');
+var babel = require('gulp-babel');
 
 var config = require('../../../config');
 
@@ -57,6 +58,12 @@ gulp.task('fis3-clean', function() {
 gulp.task('fis3-release', ['fis3-clean', 'webpack'], shell.task('fis3 release --verbose -d ' + path.resolve(config.root, config.dest)));
 // gulp.task('fis3-release', ['fis3-clean'], shell.task('fis3 release --verbose -d ' + path.resolve(config.root, config.dest)));
 gulp.task('fis3-watch',  shell.task('fis3 release -w -d ' + path.resolve(config.root, config.dest)));
+
+gulp.task('build-server', function() {
+    return gulp.src(config.root + '/server/**/*.js')
+        .pipe(babel())
+        .pipe(gulp.dest(config.root + '/.server-dist'));
+});
 
 // 对外命令
 gulp.task('debug', ['fis3-watch', 'inspector-brk']);

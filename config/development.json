@@ -5,6 +5,6 @@
 	"viewCache": false,
 	"LSCache": false,
 	"combo": false,
-	"redisHost": "10.1.196.134",
+	"redisHost": "10.1.196.67",
 	"redisPort": 6379
 }

@@ -11,5 +11,6 @@ npm-debug.log*
 /tmp
 .tmp
 .dist
+.server-dist
 client/libs
 dep

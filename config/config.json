@@ -31,5 +31,9 @@
 
     "comboPattern": "/co??%s",
     "urlPattern": "/public/c/%s",
-    "urlPrefix": "/public"
+    "urlPrefix": "/public",
+
+    "serverUrl": "https://passport.lagou.com",
+    "secretKey": "lagou-sdfmmmkqo6",
+    "serviceId": "lagou"
 }
