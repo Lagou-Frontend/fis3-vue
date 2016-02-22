@@ -16,7 +16,7 @@ const logger = require('tracer').colorConsole();
 module.exports = function() {
 	return function(req, res, next) {
 		// 如果是message，需要进行权限验证，未登录需要重定向到登录页面
-		logger.log('req.session.USER_CONTEXT == ' + req.session.USER_CONTEXT);
+		// logger.log('req.session.USER_CONTEXT == ' + req.session.USER_CONTEXT);
 
 		// 从请求获取ticket
 		var ticket = CasFilter.retrieveParamsFromRequest(req, PConst.PARAM_TICKET);
@@ -27,6 +27,7 @@ module.exports = function() {
 			return;
 		}
 
+		// TODO 此处应该把需要验证的url放到配置文件，统一管理
 		if (req.session.USER_CONTEXT === undefined && req.url.indexOf('/public/message/main.html') === 0) {
 			var redirectUrl = new LoginProtocol(CasFilter.constructServiceUrl(req)).getRequestUrl();
 			res.redirect(redirectUrl);

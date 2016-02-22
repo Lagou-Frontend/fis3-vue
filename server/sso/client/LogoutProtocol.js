@@ -5,23 +5,23 @@ var AbstractSsoProtocol = require('./AbstractSsoProtocol');
 
 // baseUrl, serviceId, secretKey是由应用程序决定的
 
-function LoginProtocol(service) {
+function LogoutProtocol(service) {
 	this.service = service;
-	this.shortUrl = PConst.LOGIN_URL;
-	this.action = PConst.LOGIN_ACTION;
+	this.shortUrl = PConst.LOGOUT_URL;
+	this.action = PConst.LOGOUT_ACTION;
 
 	/**
 	 * Override
 	 */
 	this.buildParameters = function() {
-		var params = LoginProtocol.prototype.buildParameters.call(this);
+		var params = LogoutProtocol.prototype.buildParameters.call(this);
 		params[PConst.PARAM_SERVICE] = this.service;
 
-		logger.log('login params............ ' + JSON.stringify(params));
+		logger.log('logout params............ ' + JSON.stringify(params));
 		return params;
 	};
 }
 
-LoginProtocol.prototype = new AbstractSsoProtocol();
+LogoutProtocol.prototype = new AbstractSsoProtocol();
 
-module.exports = LoginProtocol;
+module.exports = LogoutProtocol;

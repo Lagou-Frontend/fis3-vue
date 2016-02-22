@@ -1,9 +1,26 @@
 'use strict';
 
 const logger = require('tracer').colorConsole();
+const request = require('request');
 
 exports.list = function(req, res) {
-	logger.info('session ====== ' + JSON.stringify(req.session));
+	// logger.info('session ====== ' + JSON.stringify(req.session));
+	request.post({
+		url: 'http://www.lagou.com/message/msglist.json',
+		headers: {
+			'X-Requested-With': 'XMLHttpRequest',
+			'Accept': 'application/json, text/javascript, */*; q=0.01'
+		},
+		json: true,
+		form: {
+			queryType: '',
+			pageNo: 1
+		}
+	}, function(err, httpResponse, body) {
+		logger.info('msglist response: ' + JSON.stringify(body));
+	});
+
+
 	res.json({
 		"content": {
 			"data": {

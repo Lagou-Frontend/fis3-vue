@@ -8,34 +8,23 @@
 
 'use strict';
 
+const DEFAULT_VALIDATE_FAIL_URL = "http://www.lagou.com";
 const logger = require('tracer').colorConsole();
 const PConst = require('../constants/protocol-constant');
 const CasFilter = require('../sso/filter/abstract-cas-filter');
 const ValidateUrlUtil = require('../utils/validate-url-utils');
 const ValidateServiceTicketProtocol = require('../sso/client/ValidateServiceTicketProtocol');
+var Promise = require('promise');
 
 const request = require('request');
 
-function onSuccessfulValidation() {
-
-}
-
 // 验证票据
-function validateTicket(req, service, ticket) {
+function validateTicket(service, ticket) {
 	var vstProtocol = new ValidateServiceTicketProtocol(service, ticket);
 	var validateUrl = vstProtocol.getRequestUrl();
-
-	logger.log('validateUrl == ' + validateUrl);
 	// post cas server get user infomation
-
-	request(validateUrl, function(error, response, assertion) {
-		if (!error && response.statusCode === 200) {
-			if (assertion.success === true) {
-				// TODO validate 成功后，设置session
-				req.session.USER_CONTEXT = assertion;
-			}
-		}
-	});
+	var prequest = Promise.denodeify(request);
+	return prequest(validateUrl);
 }
 
 // 不是grantST将不会进入这个filter
@@ -52,9 +41,23 @@ module.exports = function() {
 		}
 
 		logger.debug('[验证票据] 进行验证票据 :' + ticket);
-		validateTicket(req, service, ticket);
-		// 验证成功后，重定向到请求url，去掉ticket，因为st 已经失效
-		logger.info('Redirecting after successful ticket validation.');
-		res.redirect(service);
+		validateTicket(service, ticket).then(function(data) {
+			logger.debug('[验证票据] 票据验证结果 :' + data.body);
+			var assertion = JSON.parse(data.body);
+			logger.debug('data.body.success ============ ' + assertion.success);
+			if (assertion.success === true) {
+				req.session.USER_CONTEXT = assertion.data;
+				// 验证成功后，重定向到请求url，去掉ticket，因为st 已经失效
+				logger.info('Redirecting after successful ticket validation.');
+				res.redirect(service);
+			} else {
+				// 验证失败，跳转到拉勾首页
+				res.redirect(DEFAULT_VALIDATE_FAIL_URL);
+			}
+		}, function(error) {
+			logger.info('validate ticket fail.');
+			res.redirect(DEFAULT_VALIDATE_FAIL_URL);
+		});
+
 	};
 };

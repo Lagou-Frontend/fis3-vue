@@ -52,7 +52,9 @@ exports.PARAM_TICKET = 'ticket';
 /**
 	* BASE URL
 */
-exports.BASE_URL = 'http://www.lagou.com';
+// exports.BASE_URL = 'http://www.lagou.com';
+// 开发阶段使用localhost
+exports.BASE_URL = 'http://localhost';
 
 /**
 	* SSO URL
@@ -67,6 +69,11 @@ exports.LOGIN_ACTION = 'login';
  * 登录页
  */
 exports.LOGIN_URL = '/login/login.html';
+
+/**
+ * 后台登出 参数名
+ */
+exports.PARAM_LOGOUT = 'logoutRequest';
 
 /**
  * ?
