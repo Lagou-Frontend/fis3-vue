@@ -133,20 +133,22 @@ function destroySession(request) {
 	var ticketId = null;
 	var session = request.session;
 	if (_isFrontChannelLogoutRequest(request)) {
-	    ticketId = getTicketsessionStorage().getTicketId(session);
+		// TODO 这段逻辑目前还没实现
+		// ticketId = getTicketsessionStorage().getTicketId(session);
 	} else if (_isBackChannelLogoutRequest(request)) {
-	    ticketId = retrieveTicketFromRequest(request);
+		ticketId = CasFilter.retrieveParamsFromRequest(request, PConst.PARAM_TICKET);
 	} else {
-	    return;
+		return;
 	}
 	if (ticketId !== null) {
-	    logger.debug("Remove session for ticketId {}", ticketId);
+		logger.debug('Remove session for ticketId {}', ticketId);
 
 		session.USER_CONTEXT = null;
 
-	    // String sessionId = getTicketsessionStorage().removeTicketSession(ticketId);
-	    // // 销毁session
-	    // getTicketsessionStorage().destorySession(sessionId, session);
+		// TODO 目前这段逻辑还没实现，待实现
+		// String sessionId = getTicketsessionStorage().removeTicketSession(ticketId);
+		// // 销毁session
+		// getTicketsessionStorage().destorySession(sessionId, session);
 	}
 }
 
