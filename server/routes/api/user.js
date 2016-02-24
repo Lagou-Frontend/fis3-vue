@@ -3,5 +3,5 @@ const users = require('../../controllers/users');
 
 module.exports = function(app) {
 	// app.post('/api/users', users.show);
-	app.get('/api/users', users.list);
+	app.get('/users', users.list);
 };

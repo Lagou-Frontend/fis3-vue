@@ -1,7 +1,14 @@
+/**
+ * TODO
+ * 目标：用文件目录结构自动生成route
+ * 原则：约定大于配置
+ * 参考：https://github.com/xinyu198736/rainbow
+ */
 'use strict';
 
 const fs = require('fs');
 const path = require('path');
+const apiRouter = require('express').Router();
 
 function walk(rootdir, app, subdir) {
 	var abspath = subdir ? path.join(rootdir, subdir) : rootdir;
@@ -17,5 +24,7 @@ function walk(rootdir, app, subdir) {
 }
 
 module.exports = function(app) {
-	walk(__dirname + '/../routes/', app);
+	// 此处细分路由
+	app.use('/api', apiRouter);
+	walk(__dirname + '/../routes/', apiRouter);
 };
