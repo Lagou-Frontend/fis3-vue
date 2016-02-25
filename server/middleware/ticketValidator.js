@@ -14,8 +14,7 @@ const PConst = require('../constants/protocol-constant');
 const CasFilter = require('../sso/filter/abstract-cas-filter');
 const ValidateUrlUtil = require('../utils/validate-url-utils');
 const ValidateServiceTicketProtocol = require('../sso/client/ValidateServiceTicketProtocol');
-var Promise = require('promise');
-
+const Promise = require('bluebird');
 const request = require('request');
 
 // 验证票据
@@ -23,8 +22,17 @@ function validateTicket(service, ticket) {
 	var vstProtocol = new ValidateServiceTicketProtocol(service, ticket);
 	var validateUrl = vstProtocol.getRequestUrl();
 	// post cas server get user infomation
-	var prequest = Promise.denodeify(request);
-	return prequest(validateUrl);
+	return new Promise(function(resolve, reject) {
+		request(validateUrl, function(error, response, body) {
+			if (!error && response.statusCode === 200) {
+				resolve(body);
+			} else {
+				reject(error);
+			}
+		});
+	});
+	// var prequest = Promise.denodeify(request);
+	// return prequest(validateUrl);
 }
 
 // 不是grantST将不会进入这个filter
@@ -41,21 +49,20 @@ module.exports = function() {
 		}
 
 		logger.debug('[验证票据] 进行验证票据 :' + ticket);
-		validateTicket(service, ticket).then(function(data) {
-			logger.debug('[验证票据] 票据验证结果 :' + data.body);
-			var assertion = JSON.parse(data.body);
-			logger.debug('data.body.success ============ ' + assertion.success);
+		validateTicket(service, ticket).then(function(body) {
+			logger.debug('[验证票据] 票据验证结果 :' + body);
+			var assertion = JSON.parse(body);
 			if (assertion.success === true) {
 				req.session.USER_CONTEXT = assertion.data;
 				// 验证成功后，重定向到请求url，去掉ticket，因为st 已经失效
-				logger.info('Redirecting after successful ticket validation.');
+				logger.debug('[验证票据] 票据验证成功，重定向结果 :' + service);
 				res.redirect(service);
 			} else {
 				// 验证失败，跳转到拉勾首页
 				res.redirect(DEFAULT_VALIDATE_FAIL_URL);
 			}
 		}, function(error) {
-			logger.info('validate ticket fail.');
+			logger.info('[验证票据] 票据验证失败：' + JSON.parse(error));
 			res.redirect(DEFAULT_VALIDATE_FAIL_URL);
 		});
 
