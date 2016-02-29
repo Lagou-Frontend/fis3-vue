@@ -1,7 +1,7 @@
 const users = require('../../controllers/users');
 // const apiRouter = require('../../middleware/router').apiRouter;
 
-module.exports = function(app) {
+module.exports = function(router) {
 	// app.post('/api/users', users.show);
-	app.get('/users', users.list);
+	router.get('/users', users.list);
 };
