@@ -1,5 +1,3 @@
 module.exports = {
-	reverse: function(s) {
-		return s.split('').reverse().join('');
-	}
+	reverse: (s) => s.split('').reverse().join('')
 };
