@@ -2,6 +2,7 @@
 
 var cluster = require('cluster');
 var express = require('express');
+var https = require('https');
 
 // if (cluster.isMaster) {
 if (false) {
@@ -20,7 +21,7 @@ if (false) {
 	cluster.on('exit', function(worker, code, signal) {
 		console.log('Worker ' + worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal);
 		console.log('Starting a new worker');
-		cluster.fork();
+		cluster.fork(); // worker进程挂了，重启worker进程
 	});
 } else {
 
@@ -33,9 +34,12 @@ if (false) {
 	});
 
 	require('./env/express')(app);
-	require('./env/routes')(app);
 
 	if (require.main === module) {
+		// https.createServer(require('./env/ssl'), app).listen(app.get('port'), function() {
+		// 	console.log('[%s] Express server listening on port %d',
+		// 		app.get('env').toUpperCase(), app.get('port'));
+		// });
 		app.listen(app.get('port'), function() {
 			console.log('[%s] Express server listening on port %d',
 				app.get('env').toUpperCase(), app.get('port'));

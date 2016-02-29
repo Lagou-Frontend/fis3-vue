@@ -39,8 +39,8 @@ function validateTicket(service, ticket) {
 module.exports = function() {
 	return function(req, res, next) {
 		// 如果是message，需要进行权限验证，需重定向
-		const ticket = CasFilter.retrieveParamsFromRequest(req, PConst.PARAM_TICKET);
-		const service = CasFilter.constructServiceUrl(req);
+		let ticket = CasFilter.retrieveParamsFromRequest(req, PConst.PARAM_TICKET);
+		let service = CasFilter.constructServiceUrl(req);
 
 		// 不是验证的url，直接跳走
 		if (!ValidateUrlUtil.isGrantST(req, ticket)) {

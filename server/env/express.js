@@ -68,14 +68,11 @@ module.exports = function(app) {
 	app.use(compress());
 	app.use('/co', middleware.combo());
 
-	// router
-	// app.use('/api', middleware.router.apiRouter());
-	// app.use(middleware.router.viewRouter({
-	// 	index: path.resolve(config.dest, 'public/index.html')
-	// }));
 	app.use(middleware.router({
 		index: path.resolve(config.dest, 'public/index.html')
 	}));
+	// 加载路由
+	require('./routes')(app);
 	// app.use('/api', middleware.proxy({
 	// 	target: config.api_target
 	// }));
@@ -86,6 +83,7 @@ module.exports = function(app) {
 	app.use('/libs', express.static(path.join(app.get('root'), '/libs')));
 	// 处理500错误
 	app.use(middleware.error());
+
 	// 处理404错误
 	app.use(function(req, res, next) {
 		res.status(404).sendFile(config.root + '/tmpl/404.html');
