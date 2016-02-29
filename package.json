@@ -1,7 +1,7 @@
 {
   "name": "fis3-vue",
   "version": "0.0.1",
-  "author": "Koala Huang <dapixp@gmail.com>",
+  "author": "Garylin <linguohui1984@gmail.com>",
   "license": "MIT",
   "description": "Very Strong Node CMS",
   "keywords": [
@@ -12,9 +12,9 @@
   "main": "server/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/okoala/fis3-vue.git"
+    "url": "https://github.com/garylin/fis3-vue.git"
   },
-  "bugs": "https://github.com/okoala/fis3-vue/issues",
+  "bugs": "https://github.com/garylin/fis3-vue/issues",
   "scripts": {
     "pre": "gulp --gulpfile build/gulp/tasks/preinstall.js preinstall",
     "dev": "gulp --gulpfile build/gulp/tasks/dev.js dev",
@@ -29,9 +29,11 @@
     "list": "pm2 deploy ./config/config.json production list"
   },
   "dependencies": {
+    "async": "^1.5.2",
     "babel-core": "^6.3.21",
     "babel-preset-es2015": "^6.3.13",
     "babelify": "^7.2.0",
+    "bluebird": "^3.3.1",
     "compression": "^1.4.4",
     "connect-redis": "^3.0.1",
     "cookie-parser": "^1.4.1",

@@ -21,17 +21,6 @@
   * BrowserSync
 
 
-界面和样式是直接copy腾讯CDC的idesign.qq.com
-
-### 截图
-
-![](http://i1.tietuku.com/8f4dd53803c48148.png)
-
-![](http://i1.tietuku.com/50a4afbf50a549fc.png)
-
-------
-
-
 #### 快速开始
     // 运行项目
     cd fis3-vue
@@ -60,7 +49,7 @@
 
 -----
 #### 项目说明
-    1. 无分号，2Tab缩进.
+    1. 无分号，Tab缩进.
 
     2. 通过package.json的components字段，可以添加指定的库。例如：
       "components": [
@@ -81,6 +70,19 @@
       Sublime Text 3: https://github.com/okoala/sublime-bak.git
       Atom: https://github.com/okoala/atom-bak.git
       已经集成目前比较流行的插件~~项目解压覆盖到对应的文件, 然后重启编辑器即可.
+
+#### 参考资料
+    1. 调试
+        http://yijiebuyi.com/blog/9a86b5f28c1217038780afb1c4547faf.html
+    2. 异常处理
+        https://www.joyent.com/developers/node/design/errors
+        http://programmers.stackexchange.com/questions/144326/try-catch-in-javascript-isnt-it-a-good-practice
+        http://stackoverflow.com/questions/7310521/node-js-best-practice-exception-handling/7313005#7313005
+     3. 异步处理
+        http://liubin.org/promises-book
+        https://www.twilio.com/blog/2015/10/asyncawait-the-hero-javascript-deserved.html
+        http://aisk.me/using-async-await-to-avoid-callback-hell/
+
 
 
 ------
