@@ -8,7 +8,7 @@ const compress = require('compression');
 const path = require('path');
 const swig = require('swig');
 const lusca = require('lusca');
-const middleware = ['csrf', 'authentication', 'combo', 'router', 'proxy', 'static', 'error', 'ticketValidator'];
+const middleware = ['csrf', 'authentication', 'combo', 'proxy', 'static', 'error', 'ticketValidator'];
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 const config = require('../../config');
@@ -68,11 +68,13 @@ module.exports = function(app) {
 	app.use(compress());
 	app.use('/co', middleware.combo());
 
-	app.use(middleware.router({
-		index: path.resolve(config.dest, 'public/index.html')
-	}));
 	// 加载路由
-	require('./routes')(app);
+	require('./routes')['commonRouter']({
+		index: path.resolve(config.dest, 'public/index.html')
+	});
+	require('./routes')['apiRouter'](app);
+
+	// 代理设置
 	// app.use('/api', middleware.proxy({
 	// 	target: config.api_target
 	// }));
