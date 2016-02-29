@@ -63,8 +63,8 @@ module.exports = function(app) {
 		xssProtection: true
 	}));
 	app.use(middleware.csrf());
-	app.use(middleware.authentication());
-	app.use(middleware.ticketValidator());
+	app.use(middleware.authentication()); // 鉴权
+	app.use(middleware.ticketValidator()); // 自动登录票据验证
 	app.use(compress());
 	app.use('/co', middleware.combo());
 
@@ -84,5 +84,10 @@ module.exports = function(app) {
 	app.use('/public', middleware.static(path.join(config.dest, '/public')));
 	app.use('/static', middleware.static(path.join(config.dest, '/static')));
 	app.use('/libs', express.static(path.join(app.get('root'), '/libs')));
+	// 处理500错误
 	app.use(middleware.error());
+	// 处理404错误
+	app.use(function(req, res, next) {
+		res.status(404).sendFile(config.root + '/tmpl/404.html');
+	});
 };

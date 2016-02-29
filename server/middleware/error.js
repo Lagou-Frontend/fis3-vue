@@ -2,7 +2,8 @@
 'use strict';
 
 var errorHandler = require('errorhandler'),
-	app = require('../index');
+	app = require('../index'),
+	config = require('../../config');
 
 module.exports = function() {
 	var logger = app.get('logger') || console;
@@ -10,10 +11,15 @@ module.exports = function() {
 		function(err, req, res, next) {
 			var msg = err.stack;
 			if (err.mod) msg = '[' + err.mod + '] ' + msg;
-			logger.error(msg);
+			logger.error('[ERROR] -- ' + msg);
 
 			if (err.status) res.statusCode = err.status;
-			if (res.statusCode < 400) res.statusCode = 500;
-			res.end();
+			if (res.statusCode < 400) {
+				res.statusCode = 500;
+			}
+
+			// 发生错误时统一定向到404错误页面
+			res.status(500).sendFile(config.root + '/tmpl/404.html');
+			// res.end();
 		} : errorHandler();
 };
