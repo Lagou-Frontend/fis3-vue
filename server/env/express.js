@@ -83,11 +83,15 @@ module.exports = function(app) {
 	app.use('/public', middleware.static(path.join(config.dest, '/public')));
 	app.use('/static', middleware.static(path.join(config.dest, '/static')));
 	app.use('/libs', express.static(path.join(app.get('root'), '/libs')));
-	// 处理500错误
-	app.use(middleware.error());
 
 	// 处理404错误
 	app.use(function(req, res, next) {
-		res.status(404).sendFile(config.root + '/tmpl/404.html');
+		var err = new Error('Not Found');
+		err.status = 404;
+		next(err);
+		// res.status(404).sendFile(config.root + '/views/404.html');
 	});
+
+	// 处理500错误
+	app.use(middleware.error());
 };

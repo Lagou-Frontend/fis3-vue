@@ -8,6 +8,7 @@ var errorHandler = require('errorhandler'),
 module.exports = function() {
 	var logger = app.get('logger') || console;
 	return app.get('env') === 'production' ?
+	// return app.get('env') === 'development' ?
 		function(err, req, res, next) {
 			var msg = err.stack;
 			if (err.mod) msg = '[' + err.mod + '] ' + msg;
@@ -19,7 +20,7 @@ module.exports = function() {
 			}
 
 			// 发生错误时统一定向到404错误页面
-			res.status(500).sendFile(config.root + '/tmpl/404.html');
+			res.status(res.statusCode).sendFile(config.root + '/views/404.html');
 			// res.end();
 		} : errorHandler();
 };
