@@ -1,3 +1,5 @@
+'use strict';
+
 var React = require('../../../dep/react/react');
 var AllMessage = require('./message-content/AllMessage.react');
 var DeliverMessage = require('./message-content/DeliverMessage.react');

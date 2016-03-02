@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="HandheldFriendly" content="true"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+
+        <!-- 关闭手机号自动识别 -->
+        <meta name="format-detection" content="telephone=no"/>
+
+        <!-- Set render engine for 360 browser -->
+        <meta name="renderer" content="webkit">
+
+        <!-- No Baidu Siteapp-->
+        <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+        <title>TODO LIST!</title>
+
+        <!-- <link rel="stylesheet" type="text/css" href="css/global.scss"> -->
+        <meta name="description" content="集成解决方案" />
+        <meta name="keywords" content="集成解决方案, 模块化开发,fis3,spa,vue" />
+    </head>
+    <body>
+        <div class="container" id="main">
+			<h2>TODO LIST</h2>
+			<ul class="listUl" id="listContainer">
+				<link rel="import" href="../tmpl/art-todo-list/todo.html?__inline">
+			</ul>
+			<form class="" action="/todos" method="post">
+				<input type="text" name="name" value="">
+				<button type="button" name="button">提交</button>
+			</form>
+        </div>
+    </body>
+</html>

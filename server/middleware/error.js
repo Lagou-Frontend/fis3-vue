@@ -20,7 +20,7 @@ module.exports = function() {
 			}
 
 			// 发生错误时统一定向到404错误页面
-			res.status(res.statusCode).sendFile(config.root + '/views/404.html');
+			res.status(res.statusCode).sendFile(config.dest + 'public/404.html');
 			// res.end();
 		} : errorHandler();
 };

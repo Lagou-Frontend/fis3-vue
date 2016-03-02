@@ -1,3 +1,16 @@
+// MessageApp
+// Header
+// ContainerMain
+// -- MessageBox
+// 	-- MessageNav
+// 	-- MessageList
+// 		-- MessageItem
+// 		-- Pagination
+// ContainerSide
+// Footer
+
+'use strict';
+
 var React = require('../../dep/react/react');
 var ReactDOM = require('../../dep/react/react-dom');
 
@@ -18,13 +31,3 @@ ReactDOM.render(<div className = "content-left" >
     </div></div>,
 	document.getElementById('example')
 );
-// MessageApp
-// Header
-// ContainerMain
-// -- MessageBox
-// 	-- MessageNav
-// 	-- MessageList
-// 		-- MessageItem
-// 		-- Pagination
-// ContainerSide
-// Footer

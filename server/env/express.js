@@ -12,15 +12,19 @@ const middleware = ['csrf', 'authentication', 'combo', 'proxy', 'static', 'error
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 const config = require('../../config');
+const template = require('art-template');
 
 module.exports = function(app) {
 	// set相关变量
-	app.engine('html', swig.renderFile);
+	// app.engine('html', swig.renderFile);
 	app.set('name', meta.name);
 	app.set('version', meta.version);
 	app.set('port', process.env.PORT || 4000);
 	app.set('root', path.resolve(__dirname, '../../').replace(/\/+$/, ''));
-	app.set('views', path.resolve(__dirname, '../../.dist/').replace(/\/+$/, ''));
+	app.set('views', path.resolve(__dirname, '../../.dist/public/').replace(/\/+$/, ''));
+	template.config('base', '');
+	template.config('extname', '.html');
+	app.engine('.html', template.__express);
 	app.set('view engine', 'html');
 	app.set('view cache', config.view_cache);
 	app.set('logger', console);
