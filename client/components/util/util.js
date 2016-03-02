@@ -6,21 +6,21 @@ let _ = Vue.util;
 let extend = _.extend;
 
 exports.isEmptyObject = function(obj) {
-    var name;
+	var name;
 
-    for ( name in obj ) {
-        return false;
-    }
+	for (name in obj) {
+		return false;
+	}
 
-    return true;
+	return true;
 }
 
 extend(exports, {
-    dom: require('./dom')
+	dom: require('./dom')
 });
 
 extend(exports, {
-    noop: function() {}
+	noop: function() {}
 });
 
 extend(exports, {
@@ -29,4 +29,3 @@ extend(exports, {
 
 extend(exports, require('./envi'));
 extend(exports, require('./uuid'));
-

@@ -51,7 +51,16 @@ module.exports = function() {
 		logger.debug('[验证票据] 进行验证票据 :' + ticket);
 		validateTicket(service, ticket).then(function(body) {
 			logger.debug('[验证票据] 票据验证结果 :' + body);
-			var assertion = JSON.parse(body);
+			var assertion;
+			try {
+				assertion = JSON.parse(body);
+			} catch (e) {
+				logger.error(e);
+				logger.error('[验证票据] 票据验证失败：解析返回值错误');
+				res.redirect(DEFAULT_VALIDATE_FAIL_URL);
+				return;
+			}
+
 			if (assertion.success === true) {
 				req.session.USER_CONTEXT = assertion.data;
 				// 验证成功后，重定向到请求url，去掉ticket，因为st 已经失效

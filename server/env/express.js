@@ -69,10 +69,11 @@ module.exports = function(app) {
 	app.use('/co', middleware.combo());
 
 	// 加载路由
-	require('./routes')['commonRouter']({
+	require('./routes')['commonRouter'](app, {
 		index: path.resolve(config.dest, 'public/index.html')
 	});
 	require('./routes')['apiRouter'](app);
+	require('./routes')['viewRouter'](app);
 
 	// 代理设置
 	// app.use('/api', middleware.proxy({
