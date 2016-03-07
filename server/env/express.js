@@ -8,6 +8,7 @@ const compress = require('compression');
 const path = require('path');
 const swig = require('swig');
 const lusca = require('lusca');
+const expressValidator = require('express-validator');
 const middleware = ['csrf', 'authentication', 'combo', 'proxy', 'static', 'error', 'ticketValidator'];
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
