@@ -29,10 +29,9 @@ function walk(rootdir, router, subdir) {
 
 module.exports = {
 	commonRouter: function(app, options) {
+		app.use('/', commonRouter);
 		commonRouter.get(['/', '/*'], function(req, res, next) {
-			if (!(req.url.indexOf('/public') === 0) &&
-				!(req.url.indexOf('/api') === 0) &&
-				!(req.url.indexOf('/static') === 0)) {
+			if (req.url === '/') {
 				res.render(options.index, {
 					csrfToken: res.locals._csrf
 				});
@@ -40,7 +39,7 @@ module.exports = {
 			}
 			next();
 		});
-		commonRouter.options = options || {};
+		// commonRouter.options = options || {};
 	},
 	apiRouter: function(app) {
 		app.use('/api', apiRouter);
@@ -51,9 +50,3 @@ module.exports = {
 		walk('../routes/view/', viewRouter);
 	}
 };
-
-// module.exports = function(app) {
-// 	// 此处细分路由
-// 	app.use('/api', apiRouter);
-// 	walk(__dirname + '/../routes/', apiRouter);
-// };

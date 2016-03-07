@@ -8,9 +8,11 @@
 
 原则：职责分清，接口先行
 
+关注点：可用性、稳定性（异常处理）、规模、效率、安全
+
 ### Node层职责(View + Controller)
 
-    页面渲染（express ＋ artemplate）、路由控制、SEO、提供数据API、session管理(redis session manager)
+    页面渲染（express ＋ artemplate）、路由控制、SEO、提供数据API、session管理(redis session manager)、sso(单点登录)
 
 ### 提供什么服务？
 
@@ -20,11 +22,11 @@
 
 ### 浏览器端
 
-    前端与node模版共享、路由共享
+    前后端模板同构、前后端验证规则同构
 
 ### 后端职责（Service ＋ model）
 
-    后端无状态（？涉及事务如何处理？），负责业务/数据接口，需要完成服务治理
+    粗粒度的接口，后端无状态（restful api），负责业务/数据接口
 
 ### 需要解决的其他问题
 
@@ -33,10 +35,10 @@
 
     项目脚手架以及自动化方案
 
-    多线程（cluster）、https、安全（XSS／CSRF）、数据校验(express-validator)、form token、routes管理、url规划（rewrite）、 Mock数据、异常（IO/参数边界条件）、日志(tracer 可配合pm2)、监控、部署（PM2）、测试、持续集成(Travis)
+    多线程（cluster）、https、安全lusca（XSS／CSRF）、数据校验(express-validator)、form token、routes管理（约定大于配置）、url规划（rewrite）、 Mock数据、异常（IO/参数边界条件）、日志(tracer 可配合pm2， log monitor flume)、监控、部署（PM2）、测试、持续集成(Travis)
 
 
-### RPC
+### RPC（falline）
 
     zookeeper注册、远程服务配置管理（生成代理）、协议选择（涉及时延、CPU、内存、防火墙、非通用协议的解析）、序列化与反序列化方式、非zookeeper的rpc、简化接口调用方式、高效稳定的网络连接
 

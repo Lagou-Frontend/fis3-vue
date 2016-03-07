@@ -71,7 +71,11 @@ module.exports = function() {
 				res.redirect(DEFAULT_VALIDATE_FAIL_URL);
 			}
 		}, function(error) {
-			logger.info('[验证票据] 票据验证失败：' + JSON.parse(error));
+			try {
+				logger.info('[验证票据] 票据验证失败：' + JSON.parse(error));
+			} catch (e) {
+				logger.error('[验证票据] 票据验证失败：json 解析错误');
+			}
 			res.redirect(DEFAULT_VALIDATE_FAIL_URL);
 		});
 

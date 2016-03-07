@@ -82,7 +82,6 @@ fis
 	postprocessor: plugin('define')
 })
 
-
 .match(/\.scss$/i, {
 	rExt: '.css', // from .scss to .css
 	parser: plugin('sass3', {

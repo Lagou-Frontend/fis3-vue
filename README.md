@@ -13,7 +13,8 @@
   * Express
   * Fis3
   * Vue
-  * Sass
+  * React
+  * Less
   * PM2
   * Gulp
   * Babel
@@ -45,7 +46,14 @@
 
 #### 目录结构
 
-![](http://i1.tietuku.com/c13327378bc09699.png)
+    1. .dist -- 前端client目录的编译目录
+    2. build -- 工程构建脚本目录
+    3. client -- 前端工程目录
+    4. config -- 项目配置
+    5. dep -- bower依赖目录
+    6. docs -- 项目文档
+    7. server -- node端代码目录
+    8. test -- 测试目录
 
 -----
 #### 项目说明

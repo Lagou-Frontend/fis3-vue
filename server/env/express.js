@@ -92,7 +92,7 @@ module.exports = function(app) {
 
 	// 处理404错误
 	app.use(function(req, res, next) {
-		var err = new Error('Not Found');
+		var err = new Error('Not Found: ' + req.url);
 		err.status = 404;
 		next(err);
 		// res.status(404).sendFile(config.root + '/views/404.html');

@@ -4,5 +4,7 @@
 	"api_target": "http://idesign.qq.com",
 	"viewCache": "memory",
 	"LSCache": true,
-	"combo": true
+	"combo": true,
+	"redisHost": "10.1.196.67",
+	"redisPort": 6379
 }
