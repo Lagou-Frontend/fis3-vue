@@ -23,7 +23,7 @@
             "host": "23.88.3.62",
             "port": "10837",
             "ref" : "origin/master",
-            "repo": "https://github.com/garylin/fis3-vue.git",
+            "repo": "https://github.com/garylgh/fis3-vue.git",
             "path": "/root",
             "post-deploy": "source ~/.nvm/nvm.sh && npm install --verbose && export NODE_ENV=production && gulp --gulpfile build/gulp/tasks/deploy.js deploy"
         }
@@ -33,7 +33,7 @@
     "urlPattern": "/public/c/%s",
     "urlPrefix": "/public",
 
-    "serverUrl": "https://passport.lagou.com",
-    "secretKey": "lagou-sdfmmmkqo6",
-    "serviceId": "lagou"
+    "serverUrl": "https://passports.xxx.com",
+    "secretKey": "laa-xxxx",
+    "serviceId": "laaxxx"
 }

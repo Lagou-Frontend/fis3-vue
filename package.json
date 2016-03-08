@@ -12,9 +12,9 @@
   "main": "server/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/garylin/fis3-vue.git"
+    "url": "https://github.com/garylgh/fis3-vue.git"
   },
-  "bugs": "https://github.com/garylin/fis3-vue/issues",
+  "bugs": "https://github.com/garylgh/fis3-vue/issues",
   "scripts": {
     "pre": "gulp --gulpfile build/gulp/tasks/preinstall.js preinstall",
     "dev": "gulp --gulpfile build/gulp/tasks/dev.js dev",
