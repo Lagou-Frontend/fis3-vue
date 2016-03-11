@@ -35,7 +35,7 @@
 
     项目脚手架以及自动化方案
 
-    多线程（cluster）、https、安全lusca（XSS／CSRF）、数据校验(express-validator)、form token、routes管理（约定大于配置）、url规划（rewrite）、 Mock数据、异常（IO/参数边界条件）、日志(tracer 可配合pm2， log monitor flume)、监控、部署（PM2）、测试、持续集成(Travis)
+    多线程（cluster）、https、安全lusca（XSS／CSRF）、数据校验(express-validator)、form token、routes管理（约定大于配置）、url规划（rewrite）、 Mock数据、异常（verror）、日志(tracer 可配合pm2， log monitor flume)、监控、部署（PM2）、测试、持续集成(Travis)
 
 
 ### RPC（falline）
