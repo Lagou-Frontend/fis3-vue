@@ -14,6 +14,8 @@ const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 const config = require('../../config');
 const template = require('art-template');
+const fs = require('fs');
+const tracer = require('tracer');
 
 module.exports = function(app) {
 	// set相关变量
@@ -30,6 +32,15 @@ module.exports = function(app) {
 	app.set('view cache', config.view_cache);
 	app.set('logger', console);
 	app.enable('trust proxy');
+
+	// 访问日志目录
+	var logFilePath = path.resolve(__dirname, '../../logs');
+	var tracerLog = tracer.dailyfile({
+		root: logFilePath,
+		logPathFormat: '{{root}}/access_log_{{date}}.txt',
+		maxLogFiles: 10
+	});
+	app.set('flogger', tracerLog);
 
 	swig.setDefaults({
 		cache: config.viewCache

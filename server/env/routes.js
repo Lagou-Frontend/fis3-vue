@@ -38,6 +38,7 @@ module.exports = {
 				return;
 			}
 			next();
+			app.get('flogger').log('%s ---- "%s %s %s" %s %s', req.ip, req.method, req.url, req.protocol, res.statusCode, res.statusMessage);
 		});
 		// commonRouter.options = options || {};
 	},

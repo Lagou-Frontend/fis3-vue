@@ -33,7 +33,7 @@
     "urlPattern": "/public/c/%s",
     "urlPrefix": "/public",
 
-    "serverUrl": "https://passports.xxx.com",
-    "secretKey": "laa-xxxx",
-    "serviceId": "laaxxx"
+    "serverUrl": "https://passport.lagou.com",
+    "secretKey": "lagou-sdfmmmkqo6",
+    "serviceId": "lagou"
 }
