@@ -2,19 +2,18 @@
 
 const meta = require('../../package.json');
 const express = require('express');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const compress = require('compression');
 const path = require('path');
 const swig = require('swig');
 const lusca = require('lusca');
-const expressValidator = require('express-validator');
+// const expressValidator = require('express-validator');
 const middleware = ['csrf', 'authentication', 'combo', 'proxy', 'static', 'error', 'ticketValidator'];
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 const config = require('../../config');
 const template = require('art-template');
-const fs = require('fs');
 const tracer = require('tracer');
 
 module.exports = function(app) {

@@ -1,4 +1,4 @@
-'use strict';
+"use strict"
 
 var React = require('../../../dep/react/react');
 var Tabs = require('./Tabs.react');
